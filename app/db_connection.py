@@ -6,7 +6,10 @@ from pathlib import Path
 from typing import Generator
 import os
 
-load_dotenv(Path(__file__).parent / ".env")
+
+load_dotenv(Path(__file__).parent.parent / ".env")
+
+print(Path(__file__).parent.parent / ".env")
 
 
 # Base class for ORM models
@@ -19,6 +22,7 @@ username = os.getenv("CLOUD_SERVER_ADMIN")
 raw_password = os.getenv("DB_PASSWORD")
 server = os.getenv("SERVER")
 database = os.getenv("DATABASE")
+print(server)
 
 if not all([username, raw_password, server, database]):
     raise RuntimeError("Database environment variables are not set correctly")

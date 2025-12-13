@@ -3,11 +3,11 @@ from datetime import datetime, timezone
 from sqlalchemy import Boolean, DateTime, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column
 
-from db_connection import Base
+from app.db_connection import Base
 
 
 class User(Base):
-    __table_args__ = {"schema": "dbo"}
+    __table_args__ = {"schema": "Sales"}
     __tablename__ = "users"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)

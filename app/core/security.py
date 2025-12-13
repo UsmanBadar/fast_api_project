@@ -5,10 +5,12 @@ import jwt
 from passlib.context import CryptContext
 from fastapi import HTTPException, status
 
-from core.config import settings
+from .config import Settings
+
+settings = Settings()
 
 
-app_crypto_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+app_crypto_context = CryptContext(schemes=["scrypt"], deprecated="auto")
 
 
 def verify_password(password: str, hashed_password: str) -> bool:
@@ -16,6 +18,7 @@ def verify_password(password: str, hashed_password: str) -> bool:
 
 
 def get_password_hash(password: str) -> str:
+    print(password)
     return app_crypto_context.hash(password)
 
 
