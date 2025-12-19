@@ -5,10 +5,7 @@ import jwt
 from passlib.context import CryptContext
 from fastapi import HTTPException, status
 
-from .config import Settings
-
-settings = Settings()
-
+from .config import settings
 
 app_crypto_context = CryptContext(schemes=["scrypt"], deprecated="auto")
 
@@ -38,7 +35,7 @@ def _create_token(
         "type": token_type,
     }
 
-    encoded_jwt = jwt.encode(
+    encoded_jwt =  jwt.encode(
         to_encode,
         secret_key,
         algorithm=settings.ALGORITHM,
