@@ -6,10 +6,8 @@ from pathlib import Path
 from typing import Generator
 import os
 
+from app.core.config import settings
 
-load_dotenv(Path(__file__).parent.parent / ".env")
-
-print(Path(__file__).parent.parent / ".env")
 
 
 # Base class for ORM models
@@ -18,11 +16,11 @@ class Base(DeclarativeBase):
 
 
 # Read environment variables
-username = os.getenv("CLOUD_SERVER_ADMIN")
-raw_password = os.getenv("DB_PASSWORD")
-server = os.getenv("SERVER")
-database = os.getenv("DATABASE")
-print(server)
+username = settings.CLOUD_SERVER_ADMIN
+raw_password = settings.DB_PASSWORD
+server = settings.SERVER
+database = settings.DATABASE
+
 
 if not all([username, raw_password, server, database]):
     raise RuntimeError("Database environment variables are not set correctly")
