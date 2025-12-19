@@ -2,9 +2,10 @@ from typing import Optional
 
 from sqlalchemy.orm import Session
 
-from app.core.security import get_password_hash, verify_password
+from app.core.security import get_password_hash, verify_password, create_access_token, create_refresh_token
 from app.models.user import User
 from app.schemas.user_model import UserCreate
+from app.schemas.token_model import Token
 
 
 def get_user_by_email(db: Session, email: str) -> Optional[User]:
@@ -30,3 +31,12 @@ def authenticate_user(db: Session, email: str, password: str) -> Optional[User]:
     if not verify_password(password, user.hashed_password):
         return None
     return user
+
+
+def create_access_and_refresh_token(email: str) -> Token:
+    access_token = create_access_token(email)
+    refresh_token = create_refresh_token(email)
+    return Token(
+        access_token=access_token,
+        refresh_token=refresh_token
+    )
