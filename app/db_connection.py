@@ -1,11 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, DeclarativeBase, Session
-from dotenv import load_dotenv
 from urllib.parse import quote_plus
-from pathlib import Path
 from typing import Generator
-import os
-
 from app.core.config import settings
 
 
