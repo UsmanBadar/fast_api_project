@@ -18,6 +18,10 @@ class Settings(BaseSettings):
     CLOUD_SERVER_ADMIN: str
     SERVER: str
     DATABASE: str
+    UPSTASH_REDIS_REST_URL: str
+    UPSTASH_REDIS_REST_TOKEN: str
+    FMP_API_KEY: str
+    MASSIVE_API_KEY: str
 
     model_config = SettingsConfigDict(
         env_file=str(ENV_PATH),
