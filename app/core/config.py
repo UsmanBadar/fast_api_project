@@ -23,6 +23,7 @@ class Settings(BaseSettings):
     FMP_API_KEY: str
     MASSIVE_API_KEY: str
     ALPHA_VANTAGE_API_KEY: str
+    CLAUDE_API_KEY: str
 
     model_config = SettingsConfigDict(
         env_file=str(ENV_PATH),
