@@ -14,9 +14,9 @@ from app.schemas.stock_price_schema import (
 stock_price_chart_router = APIRouter(prefix="/stock_chart", tags=["Stock Chart"])
 
 
-@stock_price_chart_router.get("/{company_ticker}", response_model=StockPriceChartResponse, dependencies=[Depends(rate_limiter)])
+@stock_price_chart_router.get("/{company_symbol}", response_model=StockPriceChartResponse, dependencies=[Depends(rate_limiter)])
 @redis_cache(expiry=14400)
-async def get_stock_chart(company_ticker: str):
+async def get_stock_chart(company_symbol: str):
 
     url = f"https://financialmodelingprep.com/stable/historical-price-eod/full"
 
@@ -32,7 +32,7 @@ async def get_stock_chart(company_ticker: str):
 
 
     params = {
-        "symbol": company_ticker,
+        "symbol": company_symbol,
         "from": four_month_old_date.isoformat(),
         "to": datetime.date.today().isoformat(),
         "apikey": settings.FMP_API_KEY
@@ -69,7 +69,7 @@ async def get_stock_chart(company_ticker: str):
                 )
             
             return StockPriceChartResponse(
-                symbol=company_ticker,
+                symbol=company_symbol,
                 data=price_records,
                 aggregates=aggregates,
                 record_count=len(price_records)
