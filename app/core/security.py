@@ -15,7 +15,6 @@ def verify_password(password: str, hashed_password: str) -> bool:
 
 
 def get_password_hash(password: str) -> str:
-    print(password)
     return app_crypto_context.hash(password)
 
 
