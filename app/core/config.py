@@ -2,8 +2,8 @@ from pathlib import Path
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
-ENV_PATH = BASE_DIR / ".env"
+ENV_PATH = Path('/Users/usman/Documents/.env_secrets/.env').resolve()
+
 
 
 class Settings(BaseSettings):
@@ -24,6 +24,13 @@ class Settings(BaseSettings):
     MASSIVE_API_KEY: str
     ALPHA_VANTAGE_API_KEY: str
     CLAUDE_API_KEY: str
+    EMAIL_PROVIDER: str | None = None
+    MAILERSEND_API_KEY: str | None = None
+    EMAIL_FROM: str | None = None
+    EMAIL_FROM_NAME: str | None = None
+    FRONTEND_RESET_URL: str | None = None
+    PASSWORD_RESET_TOKEN_EXPIRE_MINUTES: int = 60
+    RESET_PASSWORD_SECRET_KEY: str | None = None
 
     model_config = SettingsConfigDict(
         env_file=str(ENV_PATH),
