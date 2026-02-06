@@ -61,6 +61,16 @@ def create_refresh_token(subject: Union[str, int]) -> str:
     )
 
 
+def create_password_reset_token(subject: Union[str, int]) -> str:
+    secret_key = settings.SECRET_KEY
+    return _create_token(
+        subject=subject,
+        secret_key=secret_key,
+        expires_delta=timedelta(minutes=settings.PASSWORD_RESET_TOKEN_EXPIRE_MINUTES),
+        token_type="password_reset",
+    )
+
+
 def decode_token_or_401(token: str, secret_key: str) -> dict:
     try:
         payload = jwt.decode(
@@ -106,6 +116,23 @@ def verify_refresh_token(token: str) -> dict:
     )
 
     if payload.get("type") != "refresh":
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid token type",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+
+    return payload
+
+
+def verify_password_reset_token(token: str) -> dict:
+    secret_key = settings.SECRET_KEY
+    payload = decode_token_or_401(
+        token,
+        secret_key=secret_key
+    )
+
+    if payload.get("type") != "password_reset":
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid token type",
